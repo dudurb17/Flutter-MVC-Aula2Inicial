@@ -1,15 +1,15 @@
 import 'dart:convert';
 
-import 'package:grimorio/models/google_book.dart';
 import 'package:http/http.dart' as http;
+
+import '../models/google_book.dart';
 
 class GoogleBooksService {
   static const String baseUrl = "https://www.googleapis.com/books/v1/volumes";
 
   Future<List<GoogleBook>> searchBooks(String name) async {
-    if (name != "") {
-      http.Response httpResponse =
-          await http.get(Uri.parse("$baseUrl/?q=$name"));
+    if(name != "") {
+      http.Response httpResponse = await http.get(Uri.parse("$baseUrl/?q=$name"));
 
       Map<String, dynamic> response = json.decode(httpResponse.body);
       List listResponse = response["items"];
@@ -24,5 +24,3 @@ class GoogleBooksService {
     return List.empty();
   }
 }
-
-

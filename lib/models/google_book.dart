@@ -18,27 +18,16 @@ class GoogleBook {
     title = validateTitle(map);
     authors = validateAuthors(map);
     description = validateDescription(map);
-    thumbnailLink = validateThumbnailLink(map);
+    thumbnailLink = validateThumbnail(map);
   }
 
-  validateThumbnailLink(Map<String, dynamic> map) {
-    map["volumeInfo"]["imageLinks"]?["thumbnail"] ??
-        "https://placehold.co/200x290";
-  }
+  validateThumbnail(Map<String, dynamic> map) => map["volumeInfo"]["imageLinks"]?["thumbnail"] == null ? "https://placehold.co/200x290.png" : map["volumeInfo"]["imageLinks"]?["thumbnail"];
 
-  validateDescription(Map<String, dynamic> map) {
-    map["volumeInfo"]["description"] ?? "Sem descrição";
-  }
+  validateDescription(Map<String, dynamic> map) => map["volumeInfo"]["description"] == null ? "Sem descrição" : map["volumeInfo"]["description"];
 
-  String validateAuthors(Map<String, dynamic> map) {
-    return (map["volumeInfo"]["authors"] as List<dynamic>)
-        .map((e) => e)
-        .toString();
-  }
+  String validateAuthors(Map<String, dynamic> map) => map["volumeInfo"]["authors"] == null ? "Autor desconhecido" : (map["volumeInfo"]["authors"] as List<dynamic>).map((e) => e).toString();
 
-  validateTitle(Map<String, dynamic> map) {
-    map["volumeInfo"]["title"] ?? "Titulo desconhecido";
-  }
+  validateTitle(Map<String, dynamic> map) => map["volumeInfo"]["title"] == null ? "Título desconhecido" : map["volumeInfo"]["title"];
 
   GoogleBook.fromJson(Map<String, dynamic> map) {
     id = map["id"];

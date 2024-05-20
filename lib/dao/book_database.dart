@@ -1,9 +1,13 @@
 // ignore_for_file: avoid_print
 
+import 'dart:convert';
 
-import 'package:grimorio/models/personal_book.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+
+import '../models/personal_book.dart';
+import '../services/google_book_service.dart';
+
 
 class PersonalBookDatabase {
   static const String _tableName = "bookTable";
@@ -12,7 +16,7 @@ class PersonalBookDatabase {
   static const String _dayFinished = "dayFinished";
   static const String _comments = "comments";
   static const String _googleBook = "googleBook";
-
+ 
   static const String createTableSQL =
       // ignore: prefer_adjacent_string_concatenation, prefer_interpolation_to_compose_strings
       "CREATE TABLE $_tableName($_id INTEGER NOT NULL PRIMARY KEY," +
