@@ -32,9 +32,8 @@ class GoogleBook {
 
   String validateAuthors(Map<String, dynamic> map) {
     return (map["volumeInfo"]["authors"] as List<dynamic>)
-            .map((e) => e)
-            .toString() ??
-        "Autor desconhecido";
+        .map((e) => e)
+        .toString();
   }
 
   validateTitle(Map<String, dynamic> map) {
