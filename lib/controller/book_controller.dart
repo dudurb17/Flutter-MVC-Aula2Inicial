@@ -22,4 +22,8 @@ class BookController {
   void uptadeBook(PersonalBook personalBook) {
     personalBookDatabase.save(personalBook);
   }
+
+  void deleteBook(PersonalBook personalBook){
+    personalBookDatabase.delete(personalBook);
+  }
 }
