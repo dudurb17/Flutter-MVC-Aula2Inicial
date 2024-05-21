@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grimorio/controller/book_controller.dart';
 import 'package:grimorio/models/personal_book.dart';
 import 'package:grimorio/screens/components/date_input.dart';
 
@@ -22,17 +23,19 @@ class _EditDetailsState extends State<EditDetails> {
   final TextEditingController finalDateController = TextEditingController();
   final TextEditingController commentsController = TextEditingController();
 
+  final BookController bookController = BookController();
+
   @override
   void initState() {
     super.initState();
     // Fill with book info
-    if(widget.personalBook.comments != ""){
+    if (widget.personalBook.comments != "") {
       commentsController.text = widget.personalBook.comments;
     }
-    if(widget.personalBook.dayStarted != ""){
+    if (widget.personalBook.dayStarted != "") {
       initialDateController.text = widget.personalBook.dayStarted;
     }
-    if(widget.personalBook.dayFinished != ""){
+    if (widget.personalBook.dayFinished != "") {
       finalDateController.text = widget.personalBook.dayFinished;
     }
   }
@@ -44,7 +47,9 @@ class _EditDetailsState extends State<EditDetails> {
         decoration: AppBackgroundProperties.boxDecoration,
         child: Scaffold(
           backgroundColor: Colors.transparent,
-          appBar: AppBar(backgroundColor: AppColors.black,),
+          appBar: AppBar(
+            backgroundColor: AppColors.black,
+          ),
           body: SingleChildScrollView(
             child: Column(
               children: <Widget>[
@@ -63,18 +68,22 @@ class _EditDetailsState extends State<EditDetails> {
                           children: <Widget>[
                             Padding(
                               padding: const EdgeInsets.only(bottom: 16.0),
-                              child: DateInput(textController: initialDateController, label: "Início da Leitura"),
+                              child: DateInput(
+                                  textController: initialDateController,
+                                  label: "Início da Leitura"),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(bottom: 24.0),
-                              child: DateInput(textController: finalDateController, label: "Final da Leitura"),
+                              child: DateInput(
+                                  textController: finalDateController,
+                                  label: "Final da Leitura"),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(bottom: 24.0),
                               child: TextFormField(
                                 controller: commentsController,
-                                decoration:
-                                  InputDecorationProperties.newInputDecoration(
+                                decoration: InputDecorationProperties
+                                    .newInputDecoration(
                                   "",
                                   "Comentários",
                                 ),
@@ -83,9 +92,22 @@ class _EditDetailsState extends State<EditDetails> {
                             ),
                             Padding(
                               padding: const EdgeInsets.only(bottom: 40.0),
-                              child: PrimaryButton(text: "Salvar", onTap: () {
-                                // Navigator.pop(context, "Updated book");
-                              }),
+                              child: PrimaryButton(
+                                  text: "Salvar",
+                                  onTap: () {
+                                    final PersonalBook newPersonalBook =
+                                        PersonalBook(
+                                            dayStarted:
+                                                initialDateController.text,
+                                            dayFinished:
+                                                finalDateController.text,
+                                            comments: commentsController.text,
+                                            googleBook:
+                                                widget.personalBook.googleBook,
+                                            id: widget.personalBook.id);
+                                    bookController.uptadeBook(newPersonalBook);
+                                    Navigator.pop(context, newPersonalBook);
+                                  }),
                             ),
                           ],
                         ),
